@@ -1,4 +1,4 @@
-class Weapon {
+export class Weapon {
     name: string;
 
     constructor(argname: string) {
@@ -6,7 +6,7 @@ class Weapon {
     }
 }
 
-class Hero {
+export class Hero {
     name: string;
     power: number;
     life: number;
@@ -29,20 +29,20 @@ class Hero {
     }
 
     attack(opponent: Hero) {
-        if (this.isAlive()) {
+        // if (this.isAlive()) {
             console.log(`${this.name} did ${this.power} damage to ${opponent.name} that had ${opponent.life} life `);
             opponent.life -= this.power;
             console.log(`${opponent.name} now has ${opponent.life} life `);
             return opponent.isAlive();
-        } else {
-            return `dead people can't attack`;  
-        }            
+        // } else {
+        //     return `dead people can't attack`;  
+        // }            
     }
 
 
 }
 
-class HeroAxe extends Hero {
+export class HeroAxe extends Hero {
     weapon: Weapon;
 
     constructor(name: string,power: number, life: number) {
@@ -50,7 +50,7 @@ class HeroAxe extends Hero {
         this.weapon = new Weapon("axe");
     }
 
-    attackaxe(opponent: Hero) {
+    attack(opponent: Hero) {
         if (opponent instanceof HeroSword) {
             this.power = this.power * 2;
             super.attack(opponent);
@@ -66,7 +66,7 @@ class HeroAxe extends Hero {
 
 }
 
-class HeroSword extends Hero {
+export class HeroSword extends Hero {
     weapon: Weapon;
 
     constructor(name: string,power: number, life: number) {
@@ -74,7 +74,7 @@ class HeroSword extends Hero {
         this.weapon = new Weapon("sword");
     }
 
-    attacksword(opponent: Hero) {
+    attack(opponent: Hero) {
         if (opponent instanceof HeroSpear) {
             this.power = this.power * 2;
             super.attack(opponent);
@@ -89,7 +89,7 @@ class HeroSword extends Hero {
     }    
 }
 
-class HeroSpear extends Hero {
+export class HeroSpear extends Hero {
     weapon: Weapon;
 
     constructor(name: string,power: number, life: number) {
@@ -97,7 +97,7 @@ class HeroSpear extends Hero {
         this.weapon = new Weapon("spear");
     }
 
-    attackspear(opponent: Hero) {
+    attacks(opponent: Hero) {
         if (opponent instanceof HeroAxe) {
             this.power = this.power * 2;
             super.attack(opponent);
@@ -112,31 +112,43 @@ class HeroSpear extends Hero {
     }    
 }
 
+export class Arena {
+    firsthero: Hero;
+    secondhero: Hero;
 
-let firsthero = new Hero("bob",20,6)
-let secondhero = new Hero("henri",5,20)
-let thirdhero = new HeroAxe("gael",10,10)
-let fourthhero = new HeroSword("calvin",20,20)
-let fifthhero = new Hero("basile", 20, 20);
+    constructor(heroone: Hero, herotwo: Hero) {
+        this.firsthero = heroone;
+        this.secondhero = herotwo;
+    }
+    bothAlive() {
+        if (this.firsthero.life > 0 && this.secondhero.life > 0) {
+            return true;
+        }
+        return false;
+    }
+    
+    bothDead() {
+        if (this.firsthero.life <= 0 && this.secondhero.life <= 0) {
+            return true;
+        }
+        return false;
+    }
+    
+    thereCanOnlyBeOne() {
+        while(this.bothAlive()) {
+            this.firsthero.attack(this.secondhero);
+            this.secondhero.attack(this.firsthero);
+        }
+        if (this.bothDead()) {
+            return "No Winner"
+        } else {
+            if (this.firsthero.life > 0) {
+                return `${this.firsthero.name} wins`
+            } else {
+                return `${this.secondhero.name} wins`
+            }
+        }
+    }
 
 
-// exercice1
-// console.log(`------`);
-// console.log(firsthero.isAlive())
-// console.log(`------`);
-// console.log(secondhero.attack(firsthero))
-// console.log(`------`);
-// console.log(firsthero.attack(secondhero))
-// console.log(`------`);
-// console.log(secondhero.attack(firsthero))
-
-// exercice 2
-console.log(`------`);
-console.log(thirdhero.attackaxe(fourthhero));
-console.log(`------`);
-console.log(thirdhero.attackaxe(fifthhero));
-console.log(`------`);
-console.log(firsthero.attack(fifthhero));
-console.log(`------`);
-console.log(fourthhero.isAlive());
-console.log(`------`);
+}
