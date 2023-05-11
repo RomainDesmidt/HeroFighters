@@ -8,9 +8,6 @@ let fifthhero = new Hero("basile", 20, 20);
 let myarenawater = new Arena(thirdhero,fourthhero)
 let myarenafire = new Arena(firsthero,secondhero)
 
-
-
-
 /* // exercice1
 // console.log(`------`);
 // console.log(firsthero.isAlive())
@@ -19,10 +16,9 @@ let myarenafire = new Arena(firsthero,secondhero)
 // console.log(`------`);
 // console.log(firsthero.attack(secondhero))
 // console.log(`------`);
-// console.log(secondhero.attack(firsthero))
-*/
+// console.log(secondhero.attack(firsthero)) */
 
-/* // exercice 2
+/* // exercice2
 // console.log(`1------`);
 // console.log(`${thirdhero.name} attack ${fourthhero.name} :`)
 // console.log(`${fourthhero.name} is alive : ${thirdhero.attackaxe(fourthhero)}`);
@@ -44,3 +40,7 @@ let myarenafire = new Arena(firsthero,secondhero)
 // console.log(myarenawater.thereCanOnlyBeOne());
 // console.log(`2------`);
 // console.log(myarenafire.thereCanOnlyBeOne()); */
+
+/* // exercice4
+// console.log(`${fifthhero.name} is alive : ${thirdhero.attack(fifthhero)}`);
+// console.log(`${fifthhero.name} is alive : ${firsthero.attack(fifthhero)}`); */

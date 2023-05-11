@@ -1,8 +1,10 @@
 export class Weapon {
     name: string;
+    damage: number;
 
-    constructor(argname: string) {
+    constructor(argname: string, dmg: number) {
         this.name = argname;
+        this.damage = dmg;
     }
 }
 
@@ -31,7 +33,11 @@ export class Hero {
     attack(opponent: Hero) {
         // if (this.isAlive()) {
             console.log(`${this.name} did ${this.power} damage to ${opponent.name} that had ${opponent.life} life `);
-            opponent.life -= this.power;
+            if (typeof this.weapon !== 'undefined') {
+                opponent.life -= (this.power + this.weapon.damage) ;
+            } else {
+                opponent.life -= this.power;   
+            }
             console.log(`${opponent.name} now has ${opponent.life} life `);
             return opponent.isAlive();
         // } else {
@@ -47,7 +53,7 @@ export class HeroAxe extends Hero {
 
     constructor(name: string,power: number, life: number) {
         super(name,power,life);
-        this.weapon = new Weapon("axe");
+        this.weapon = new Weapon("axe",5);
     }
 
     attack(opponent: Hero) {
@@ -71,7 +77,7 @@ export class HeroSword extends Hero {
 
     constructor(name: string,power: number, life: number) {
         super(name,power,life);
-        this.weapon = new Weapon("sword");
+        this.weapon = new Weapon("sword",5);
     }
 
     attack(opponent: Hero) {
@@ -94,7 +100,7 @@ export class HeroSpear extends Hero {
 
     constructor(name: string,power: number, life: number) {
         super(name,power,life);
-        this.weapon = new Weapon("spear");
+        this.weapon = new Weapon("spear",5);
     }
 
     attacks(opponent: Hero) {
