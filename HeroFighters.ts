@@ -1,3 +1,4 @@
+// bonne pratique : mettre chaque classe dans des fichiers spérarer, ex: Hero.js, HeroAxe.js ...
 export class Weapon {
     name: string;
     damage: number;
@@ -8,13 +9,14 @@ export class Weapon {
     }
 }
 
+// ça serait top de mettre la classe Hero en abstract, pour éviter d'en créer des instances
 export class Hero {
     name: string;
     power: number;
     life: number;
     weapon: Weapon;
 
-    constructor(argname: string,argpower: number,arglife: number) {
+    constructor(argname: string, argpower: number, arglife: number) {
         this.name = argname;
         this.power = argpower;
         this.life = arglife;
@@ -22,38 +24,30 @@ export class Hero {
 
     isAlive() {
         if (this.life > 0) {
-            //return `${this.name} is alive`;
             return true
         } else {
-            //return `${this.name} is dead`;
             return false
         }
     }
 
     attack(opponent: Hero) {
-        // if (this.isAlive()) {
-            console.log(`${this.name} did ${this.power} damage to ${opponent.name} that had ${opponent.life} life `);
-            if (typeof this.weapon !== 'undefined') {
-                opponent.life -= (this.power + this.weapon.damage) ;
-            } else {
-                opponent.life -= this.power;   
-            }
-            console.log(`${opponent.name} now has ${opponent.life} life `);
-            return opponent.isAlive();
-        // } else {
-        //     return `dead people can't attack`;  
-        // }            
+        console.log(`${this.name} did ${this.power} damage to ${opponent.name} that had ${opponent.life} life `);
+        if (this.weapon) {
+            opponent.life -= (this.power + this.weapon.damage);
+        } else {
+            opponent.life -= this.power;
+        }
+        console.log(`${opponent.name} now has ${opponent.life} life `);
+        return opponent.isAlive();
     }
-
-
 }
 
 export class HeroAxe extends Hero {
     weapon: Weapon;
 
-    constructor(name: string,power: number, life: number) {
-        super(name,power,life);
-        this.weapon = new Weapon("axe",5);
+    constructor(name: string, power: number, life: number) {
+        super(name, power, life);
+        this.weapon = new Weapon("axe", 5);
     }
 
     attack(opponent: Hero) {
@@ -62,22 +56,19 @@ export class HeroAxe extends Hero {
             super.attack(opponent);
             this.power = this.power / 2;
             return opponent.isAlive();
-            //return opponent.life;
         } else {
             super.attack(opponent);
-            //return opponent.life;
             return opponent.isAlive();
         }
     }
-
 }
 
 export class HeroSword extends Hero {
     weapon: Weapon;
 
-    constructor(name: string,power: number, life: number) {
-        super(name,power,life);
-        this.weapon = new Weapon("sword",5);
+    constructor(name: string, power: number, life: number) {
+        super(name, power, life);
+        this.weapon = new Weapon("sword", 5);
     }
 
     attack(opponent: Hero) {
@@ -86,21 +77,19 @@ export class HeroSword extends Hero {
             super.attack(opponent);
             this.power = this.power / 2;
             return opponent.isAlive();
-            //return opponent.life;
         } else {
             super.attack(opponent);
-            //return opponent.life;
             return opponent.isAlive();
         }
-    }    
+    }
 }
 
 export class HeroSpear extends Hero {
     weapon: Weapon;
 
-    constructor(name: string,power: number, life: number) {
-        super(name,power,life);
-        this.weapon = new Weapon("spear",5);
+    constructor(name: string, power: number, life: number) {
+        super(name, power, life);
+        this.weapon = new Weapon("spear", 5);
     }
 
     attacks(opponent: Hero) {
@@ -109,13 +98,11 @@ export class HeroSpear extends Hero {
             super.attack(opponent);
             this.power = this.power / 2;
             return opponent.isAlive();
-            //return opponent.life;
         } else {
             super.attack(opponent);
-            //return opponent.life;
             return opponent.isAlive();
         }
-    }    
+    }
 }
 
 export class Arena {
@@ -126,22 +113,23 @@ export class Arena {
         this.firsthero = heroone;
         this.secondhero = herotwo;
     }
+
     bothAlive() {
         if (this.firsthero.life > 0 && this.secondhero.life > 0) {
             return true;
         }
         return false;
     }
-    
+
     bothDead() {
         if (this.firsthero.life <= 0 && this.secondhero.life <= 0) {
             return true;
         }
         return false;
     }
-    
+
     thereCanOnlyBeOne() {
-        while(this.bothAlive()) {
+        while (this.bothAlive()) {
             this.firsthero.attack(this.secondhero);
             this.secondhero.attack(this.firsthero);
         }
@@ -155,6 +143,4 @@ export class Arena {
             }
         }
     }
-
-
 }
